@@ -1,46 +1,53 @@
 <template>
-  <div id="app" class="bg-light min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
-      <div class="container-fluid px-4">
-        <!-- Bootstrap Icon instead of image -->
-        <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-kanban fs-4 text-primary"></i>
-          <span class="navbar-brand mb-0 h5 fw-bold">Kanban Board</span>
-        </div>
-
-        <div class="ms-auto d-flex gap-3 align-items-center">
-          <span class="text-muted small">5 boards • 24 members</span>
-          <button class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-share-fill"></i>
-          </button>
-          <button class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-gear-fill"></i>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <main class="mt-4">
-      <Board />
-    </main>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between mb-3">
+      <h2>Kanban Board</h2>
+      <button class="btn btn-primary" @click="addSection">+ Add section</button>
+    </div>
+    <div class="d-flex gap-3 overflow-auto">
+      <Section
+        v-for="section in sections"
+        :key="section._id"
+        :section="section"
+        @task-added="fetchSections"
+      />
+    </div>
   </div>
 </template>
 
-<script setup>
-import Board from '@/components/Board.vue';
+<script>
+import api from './api';
+import Section from './components/Section.vue';
+
+export default {
+  components: { Section },
+  data() {
+    return {
+      sections: [],
+    };
+  },
+  methods: {
+    async fetchSections() {
+      try {
+        const response = await api.get('/sections');
+        this.sections = response.data;
+      } catch (err) {
+        console.error('Error fetching sections', err);
+      }
+    },
+    async addSection() {
+      const title = prompt('Enter section name');
+      if (!title) return;
+      try {
+        await api.post('/sections', { title });
+        this.fetchSections();
+      } catch (err) {
+        console.error('Error adding section', err);
+      }
+    },
+  },
+  mounted() {
+    this.fetchSections();
+  },
+};
 </script>
-
-<style>
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-}
-
-::-webkit-scrollbar {
-  height: 6px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-</style>
