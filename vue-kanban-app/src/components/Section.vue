@@ -23,7 +23,7 @@ export default {
   methods: {
     async fetchTasks() {
       try {
-        const response = await api.get(`/tasks`);
+        const response = await api.get(`/sections/${this.section._id}/tasks`);
         this.tasks = response.data;
       } catch (error) {
         console.error('Error fetching tasks:', error);
