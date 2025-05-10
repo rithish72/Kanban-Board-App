@@ -53,9 +53,9 @@ npm run build
 
 ## 📸 Screenshots
 
-![Kanban Board UI]
+![Kanban Board UI](image.png)
 
-## 📌 Future Improvements
+## 📌 Future Improvements!
 
 * User authentication and login
 * Backend integration (e.g., Firebase or Node.js API)
