@@ -1,56 +1,39 @@
 <template>
-  <div class="board">
-    <Section
-      v-for="section in sections"
-      :key="section._id"
-      :section="section"
-      :tasks="tasksBySection(section._id)"
-      @add-task="addTask"
-    />
-    <button @click="createSection">+ Add Section</button>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Kanban Board</h2>
+      <button class="btn btn-primary" @click="addSection">+ Add Section</button>
+    </div>
+    <div class="d-flex overflow-auto">
+      <Section
+        v-for="section in sections"
+        :key="section._id"
+        :section="section"
+        @task-updated="fetchSections"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import api from '@/api';
 import Section from './Section.vue';
 
 const sections = ref([]);
-const tasks = ref([]);
 
-const fetchData = async () => {
-  const [sectionsRes, tasksRes] = await Promise.all([
-    api.get('/sections'),
-    api.get('/tasks')
-  ]);
-  sections.value = sectionsRes.data;
-  tasks.value = tasksRes.data;
+const fetchSections = async () => {
+  const res = await api.get('/sections');
+  sections.value = res.data;
 };
 
-const tasksBySection = (sectionId) =>
-  tasks.value.filter(task => task.sectionId === sectionId);
-
-const addTask = async (task) => {
-  const res = await api.post('/tasks', task);
-  tasks.value.push(res.data);
+const addSection = async () => {
+  const title = prompt('Enter section title');
+  if (title) {
+    await api.post('/sections', { title });
+    fetchSections();
+  }
 };
 
-const createSection = async () => {
-  const title = prompt('Enter section title:');
-  if (!title) return;
-  const res = await api.post('/sections', { title, boardId: 'default' });
-  sections.value.push(res.data);
-};
-
-onMounted(fetchData);
+onMounted(fetchSections);
 </script>
-
-<style scoped>
-.board {
-  display: flex;
-  gap: 16px;
-  padding: 1rem;
-  overflow-x: auto;
-}
-</style>

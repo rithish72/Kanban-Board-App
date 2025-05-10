@@ -1,75 +1,23 @@
+<template>
+  <div id="app" class="bg-light min-vh-100">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand mb-0 h1">Kanban Board</span>
+      </div>
+    </nav>
+    <main class="container-fluid mt-4">
+      <Board />
+    </main>
+  </div>
+</template>
+
 <script setup>
-import { reactive } from "vue"; // ✅ Import reactive
-import KanbanColumn from "./components/KanbanColumn.vue";
-
-const columns = reactive([
-  {
-    title: "To do",
-    tasks: [],
-  },
-  {
-    title: "In Progress",
-    tasks: [
-      {
-        text: "Add buttons",
-        due: "Yesterday",
-        tag: "Programming",
-        user: "👩🏻‍💻",
-      },
-      {
-        text: "Logo revision",
-        due: "Tomorrow",
-        tag: "Design",
-        user: "👨🏽‍🎨",
-      },
-    ],
-  },
-  {
-    title: "Review A",
-    tasks: [
-      { text: "UI-Kit", due: "Tomorrow", tag: "Design", user: "🧑🏼‍🎨" },
-      { text: "Managing", due: "", tag: "Design", user: "🧑🏾‍💼" },
-      { text: "Fixing bugs", due: "Today", tag: "Design", user: "🧑🏾‍💼" },
-      {
-        text: "Design Concept 2",
-        due: "Today",
-        tag: "Design",
-        user: "👨‍💻",
-      },
-    ],
-  },
-  {
-    title: "Review B",
-    tasks: [
-      {
-        text: "Right text for modal",
-        due: "Tomorrow",
-        tag: "Design",
-        user: "🧑🏻‍🎤",
-      },
-      { text: "UI-Kit", due: "Today", tag: "Design", user: "🧑🏻‍🎨" },
-      {
-        text: "Modal design fix",
-        due: "Yesterday",
-        tag: "Programming",
-        user: "👨🏾‍💻",
-      },
-      {
-        text: "Create and finalize the design...",
-        due: "",
-        tag: "Programming",
-        user: "12 Fab",
-      },
-    ],
-  },
-]);
-
-const handleAddTask = (idx) => {
-  columns[idx].tasks.push({
-    text: "New Task",
-    due: "",
-    tag: "Programming",
-    user: "👤",
-  });
-};
+import Board from './components/Board.vue';
 </script>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+</style>
