@@ -1,25 +1,23 @@
 <template>
 	<div
-		class="bg-light p-3 rounded-4 shadow-sm"
+		class="section-wrapper bg-light p-3 rounded-4 shadow-sm d-flex flex-column"
 		style="min-width: 280px; max-width: 350px"
 	>
 		<!-- Header -->
-		<div
-			class="d-flex justify-content-between align-items-center mb-3 text-muted"
-		>
-			<h6 class="mb-0 text-capitalize fw-semibold text-truncate">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h6
+				class="mb-0 text-capitalize fw-semibold text-truncate text-dark"
+			>
 				{{ section.title }}
 			</h6>
-			<div class="d-flex align-items-center gap-1 text-muted">
-				<button
-					class="btn btn-sm btn-light text-muted"
-					style="width: 30px; height: 30px"
-					title="Section Options"
-					@click="showModal = true"
-				>
-					<i class="bi bi-three-dots"></i>
-				</button>
-			</div>
+			<button
+				class="btn btn-sm btn-light rounded-circle"
+				style="width: 32px; height: 32px"
+				title="Section Options"
+				@click="showModal = true"
+			>
+				<i class="bi bi-three-dots-vertical"></i>
+			</button>
 		</div>
 
 		<!-- Task List -->
@@ -30,7 +28,7 @@
 		<!-- Add Task Form -->
 		<div
 			v-if="addingTask"
-			class="d-flex flex-column gap-2 mt-3 bg-white p-2 border rounded shadow-sm"
+			class="bg-light p-3 mt-3 rounded-3 shadow-sm d-flex flex-column gap-2"
 		>
 			<input
 				type="text"
@@ -74,9 +72,11 @@
 				</button>
 			</div>
 		</div>
+
+		<!-- Add Task Button -->
 		<button
 			v-else
-			class="btn btn-outline-secondary btn-sm w-100 mt-3"
+			class="btn btn-outline-secondary btn-sm mt-3 rounded-pill"
 			@click="addingTask = true"
 		>
 			+ Add Task
@@ -246,10 +246,34 @@ export default {
 </script>
 
 <style scoped>
+.section-wrapper {
+	background-color: #f8f9fa;
+	transition: box-shadow 0.2s ease;
+}
+
+.section-wrapper:hover {
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
 .modal {
 	z-index: 1050;
 }
+
 .modal-backdrop {
 	z-index: 1040;
+}
+
+button.btn-outline-secondary {
+	border-color: #dee2e6;
+}
+
+button.btn-outline-secondary:hover {
+	background-color: #f1f3f5;
+	border-color: #ced4da;
+}
+
+input,
+textarea {
+	border-radius: 0.5rem;
 }
 </style>

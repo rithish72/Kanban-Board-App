@@ -1,7 +1,6 @@
 <template>
 	<div
-		class="d-flex flex-row overflow-auto gap-3 px-3 pt-3 pb-4 bg-light"
-		style="min-height: 80vh"
+		class="kanban-container d-flex flex-row gap-4 px-4 pt-4 pb-5 bg-light"
 		aria-label="Kanban sections container"
 	>
 		<Section
@@ -13,18 +12,22 @@
 	</div>
 </template>
 
-<script>
-import Section from "./Section.vue";
+<style scoped>
+.kanban-container {
+	min-height: 80vh;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	padding-bottom: 2rem;
+}
 
-export default {
-	props: {
-		sections: {
-			type: Array,
-			required: true,
-		},
-	},
-	components: {
-		Section,
-	},
-};
-</script>
+.kanban-container::-webkit-scrollbar {
+	height: 8px;
+}
+.kanban-container::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+.kanban-container::-webkit-scrollbar-track {
+	background: transparent;
+}
+</style>

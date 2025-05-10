@@ -1,13 +1,14 @@
 <template>
-	<div class="task-card bg-white rounded-3 shadow-sm p-3">
-		<p class="mb-1 fw-medium">{{ task.title }}</p>
+	<div class="task-card bg-white rounded-2 shadow-sm p-3 mb-2">
+		<p class="mb-2 fw-semibold text-dark text-sm">{{ task.title }}</p>
 		<div class="d-flex justify-content-between align-items-center">
-			<small class="text-muted">{{ formatDate(task.createdAt) }}</small>
+			<small :class="['text-muted', 'text-sm']">
+				{{ formatDate(task.createdAt) }}
+			</small>
 			<span
 				v-if="task.tag"
-				class="badge"
+				class="badge rounded-pill px-2 py-1"
 				:class="getTagClass(task.tag)"
-				style="font-size: smaller; font-weight: 400"
 			>
 				{{ task.tag }}
 			</span>
@@ -46,7 +47,7 @@ export default {
 				Programming: "text-danger",
 				Managing: "text-success",
 			};
-			return map[tag] || "text-secondary";
+			return map[tag] || "bg-secondary-subtle text-secondary";
 		},
 	},
 };
@@ -55,5 +56,22 @@ export default {
 <style scoped>
 .task-card {
 	transition: transform 0.2s ease;
+	border: 1px solid #f1f1f1;
+	cursor: grab;
+}
+
+.task-card:hover {
+	transform: scale(1.01);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.text-sm {
+	font-size: 0.875rem;
+}
+
+.badge {
+	font-size: 0.75rem;
+	font-weight: 500;
 }
 </style>
+
