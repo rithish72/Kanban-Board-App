@@ -53,7 +53,7 @@ npm run build
 
 ## 📸 Screenshots
 
-*Add screenshots or a GIF demo here to showcase the UI.*
+![Kanban Board UI]
 
 ## 📌 Future Improvements
 
