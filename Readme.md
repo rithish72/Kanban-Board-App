@@ -10,10 +10,6 @@ A modern and responsive Kanban Board application built using **Vue.js** and **Bo
 * 💾 Local storage support for data persistence
 * 🧩 Modular Vue components for easy maintenance
 
-## 🚀 Demo
-
-[Live Demo](#) *(Replace with actual link when deployed)*
-
 ## 🖥️ Tech Stack
 
 * **Frontend:** Vue.js 3, Bootstrap 5
