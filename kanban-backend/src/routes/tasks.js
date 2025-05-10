@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
 		const tasks = await Task.find({ sectionId });
 		res.json(tasks);
 	} catch (err) {
+		console.error("Error fetching tasks:", err.message);
 		res.status(500).json({ error: "Server error" });
 	}
 });
@@ -62,8 +63,14 @@ router.put("/:id", async (req, res) => {
 		const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
 			new: true,
 		});
+
+		if (!updatedTask) {
+			return res.status(404).json({ error: "Task not found" });
+		}
+
 		res.json(updatedTask);
 	} catch (err) {
+		console.error("Error updating task:", err.message);
 		res.status(500).json({ error: "Update failed" });
 	}
 });
@@ -77,9 +84,15 @@ router.delete("/:id", async (req, res) => {
 	}
 
 	try {
-		await Task.findByIdAndDelete(id);
+		const task = await Task.findByIdAndDelete(id);
+
+		if (!task) {
+			return res.status(404).json({ error: "Task not found" });
+		}
+
 		res.json({ message: "Task deleted" });
 	} catch (err) {
+		console.error("Error deleting task:", err.message);
 		res.status(500).json({ error: "Delete failed" });
 	}
 });

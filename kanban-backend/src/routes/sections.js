@@ -20,15 +20,22 @@ router.get("/", async (req, res) => {
 });
 
 // Fetch tasks for a specific section
-router.get("/:sectionId/tasks", async (req, res) => {
-	const { sectionId } = req.params;
+router.get("/:id/tasks", async (req, res) => {
+	const { id } = req.params;
 
-	if (!mongoose.Types.ObjectId.isValid(sectionId)) {
-		return res.status(400).json({ error: "Invalid sectionId" });
+	const section = await Section.findById(id);
+	if (!section) {
+		return res.status(404).json({ error: "Section not found" });
 	}
 
 	try {
-		const tasks = await Task.find({ sectionId });
+		const tasks = await Task.find({ sectionId: id });
+
+		// Check if there are any tasks for this section
+		if (tasks.length === 0) {
+			return console.log("No tasks found for this section");
+		}
+
 		res.json(tasks);
 	} catch (err) {
 		console.error("Error fetching tasks:", err.message);
